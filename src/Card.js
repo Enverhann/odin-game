@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Card = ({ onClick }) => {
-    console.log('Rendering Card component');
+  console.log('Rendering Card component');
   const [pokemon, setPokemon] = useState([]);
+  const [shuffledPokemon, setShuffledPokemon] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +32,11 @@ const Card = ({ onClick }) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    // Shuffle the cards whenever the pokemon state changes
+    setShuffledPokemon([...pokemon].sort(() => Math.random() - 0.5));
+  }, [pokemon]);
+
   const fetchPokemonDetails = async (url) => {
     try {
       const response = await axios.get(url);
@@ -40,15 +46,21 @@ const Card = ({ onClick }) => {
     }
   };
 
+  const handleCardClick = (clickedPokemon) => {
+    onClick(clickedPokemon);
+    setPokemon((prevPokemon) => [...prevPokemon].sort(() => Math.random() - 0.5));
+
+  };
+
   const renderCards = () => {
-    if (!pokemon || !pokemon.length) {
+    if (!shuffledPokemon || !shuffledPokemon.length) {
       return <p>Loading cards...</p>;
     }
-  
+
     return (
       <div className="card-container">
-        {pokemon.map((poke) => (
-          <div key={poke.id} className="card" onClick={() => onClick(poke)}>
+        {shuffledPokemon.map((poke) => (
+          <div key={poke.id} className="card" onClick={() => handleCardClick(poke)}>
             <img src={poke.image} alt={poke.name} />
             <p>{poke.name}</p>
           </div>

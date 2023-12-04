@@ -15,20 +15,43 @@ code {
 .card-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card-container .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 150px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
   margin: 10px;
-  padding: 10px;
-  text-align: center;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
-
+.card-container .card:hover{
+  transform: scale(1.1);
+}
 .card img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.card-container .card p{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+}
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f0f0f0;
+  font-size: 20px;
 }
